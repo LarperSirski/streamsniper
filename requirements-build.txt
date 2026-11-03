@@ -1,0 +1,2 @@
+-r requirements-modern.txt
+PyInstaller>=6.15

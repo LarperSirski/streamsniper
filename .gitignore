@@ -1,0 +1,17 @@
+.env
+.venv/
+build/
+dist/
+.vscode/
+__pycache__/
+*.py[cod]
+logs/
+*.log
+/*.exe
+client_secret*.json
+oauth-client*.json
+youtube_guard.db
+youtube_guard.db-shm
+youtube_guard.db-wal
+recordings/
+.pytest_cache/
