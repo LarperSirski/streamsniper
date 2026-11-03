@@ -1,36 +1,30 @@
 # StreamSniper
 
-![StreamSniper logo](ui/StreamSniper.png)
+![StreamSniper Logo](ui/StreamSniper.png)
 
-**Keep an eye on the channels you follow.** StreamSniper is a Windows desktop app that watches YouTube channels, detects new uploads and live streams, and saves recordings locally.
+**Keep an eye on the channels you follow.**
 
-> **Beta software.** StreamSniper is community-built and still evolving. Back up important recordings and report issues with the details in the Activity logs.
-
-[Features](#features) | [Get started](#get-started) | [How to use](#how-to-use) | [Git workflow](#git-workflow) | [Build](#build)
+StreamSniper is a Windows desktop application that monitors YouTube channels for new uploads and live streams, automatically records streams, and saves recordings locally.
 
 ## Features
 
-- Monitor multiple YouTube channels for uploads and live streams.
-- Automatically record live streams, or start a manual recording from the live-stream list.
-- Browse saved recordings, view their metadata, and recover interrupted recording files.
-- Choose a recording folder and optionally receive Discord webhook notifications.
-- Upload completed recordings to YouTube as private, unlisted, or public videos.
-- Keep channel data, local settings, and logs in your Windows user profile.
+- Monitor multiple YouTube channels.
+- Detect new uploads and live streams.
+- Automatically or manually record live streams.
+- Browse recordings and view their metadata.
+- Recover interrupted recordings.
+- Customize recording locations.
+- Receive Discord webhook notifications.
+- Upload recordings to YouTube (Private, Unlisted, or Public).
 
-## Get started
+## Requirements
 
-### Requirements
+- Windows 10/11
+- Python 3.10+ (source installation)
+- FFmpeg installed and added to `PATH`
+- Internet connection
 
-- Windows 10 or 11
-- Python 3.10 or newer for running from source
-- FFmpeg installed and available on `PATH`
-- An internet connection
-
-Discord notifications and YouTube uploads are optional; configure them after launching the app.
-
-### Clone and launch
-
-Open PowerShell in the folder where you keep projects:
+## Installation
 
 ```powershell
 git clone https://github.com/LarperSirski/streamsniper.git
@@ -38,81 +32,64 @@ cd streamsniper
 .\run_modern.bat
 ```
 
-`run_modern.bat` creates a `.venv` virtual environment if needed, installs packages from `requirements-modern.txt`, and starts the app. You can run it again to launch StreamSniper later.
+The launcher automatically creates a virtual environment, installs dependencies, and starts the application.
 
-To update an existing checkout before launching:
+To update:
 
 ```powershell
 git pull
 .\run_modern.bat
 ```
 
-## How to use
+## Usage
 
-1. Open **Channels** and choose **Add channel**.
-2. Paste a YouTube channel URL, such as `https://www.youtube.com/@handle`, then choose a display name.
-3. Leave **Auto Record** enabled for channels whose live streams should be recorded automatically. You can pause or remove a channel from the same page.
-4. Return to **Overview** and choose **Start monitoring**. StreamSniper checks enabled channels every 90 seconds by default.
-5. Find active recordings on the Overview page and completed files in **Recorded streams**. Use **Activity logs** to review detection, recording, and error messages.
+1. Open **Channels** and add a YouTube channel using its URL.
+2. Enable **Auto Record** if you want to automatically record its live streams.
+3. Go to **Overview** and click **Start Monitoring**.
+4. StreamSniper checks channels every 90 seconds by default.
+5. View active recordings in Overview and completed recordings under **Recorded Streams**.
 
-The app must stay open, and your PC must remain awake and online, for monitoring and recording to continue. A recording starts when StreamSniper detects a live stream; it cannot capture footage from before detection.
+**Note:** StreamSniper must remain open, and your PC must stay awake and connected to the internet.
 
-### Optional: Discord notifications
+## Optional Integrations
 
-Create a Discord webhook for the channel where you want notifications. In StreamSniper, open **Settings**, enter the webhook URL, and save. The URL is stored locally and hidden in the settings field. Treat it like a password: anyone with it may be able to post to that channel.
+### Discord Notifications
 
-### Optional: YouTube uploads
+Configure a Discord webhook URL under **Settings** to receive notifications.
 
-To upload a completed recording, first create a Google Cloud project, enable the YouTube Data API v3, and create a **Desktop app** OAuth client. In StreamSniper's **Upload** page, select the downloaded OAuth client JSON, connect your YouTube account, choose the recording and visibility, then upload. The default visibility is **Private**.
+### YouTube Uploads
 
-Keep the OAuth client JSON private and outside this repository. StreamSniper stores the account refresh token in the Windows credential store; disconnect the account from the Upload page to remove it.
+Connect your YouTube account through the **Upload** page using a Google Cloud OAuth Desktop client. Choose the recording and its visibility before uploading.
 
-## Settings and files
+## Build
 
-| Data | Default location |
-| --- | --- |
-| Recordings | `%USERPROFILE%\Videos\StreamSniper` |
-| Settings, channel database, and logs | `%LOCALAPPDATA%\StreamSniper` |
-
-Change the recording folder or Discord webhook in **Settings**. Restart the app after saving settings for changes to take effect. Logs are useful when troubleshooting and can be opened from **Activity logs**.
-
-## Git workflow
-
-Get the latest version in your local checkout:
-
-```powershell
-git pull
-```
-
-For a change, create a branch, commit your work, and push it to your fork:
-
-```powershell
-git switch -c docs/my-change
-git add README.md
-git commit -m "docs: update README"
-git push -u origin docs/my-change
-```
-
-Open a pull request from your fork on GitHub. If you do not have push access to this repository, fork it on GitHub first and clone your fork instead.
-
-Never commit `.env` files, OAuth client JSON files, credentials, recordings, or local databases. These are excluded by `.gitignore`; check `git status` before committing.
-
-## Build and test
-
-Build a standalone Windows executable with:
+To create a standalone Windows executable:
 
 ```powershell
 .\build_windows.bat
 ```
 
-The executable is written to the project folder. Python is not needed to run the executable, but FFmpeg must still be installed and available on `PATH`. Build output and executables are intentionally excluded from Git.
+The executable is generated in the project folder. FFmpeg is still required.
 
-Run the test suite from the project folder with:
+## Run Tests
 
 ```powershell
 .\.venv\Scripts\python.exe -m unittest discover -s tests
 ```
 
-## Notes
+## Data Storage
 
-StreamSniper does not bypass DRM, paywalls, memberships, private streams, or other access controls. Only record or upload content you own or are authorized to use, and follow YouTube's terms and applicable laws. Detection and recording can also be affected by YouTube changes, stream restrictions, network interruptions, or deleted streams.
+| Data | Location |
+|---|---|
+| Recordings | `%USERPROFILE%\Videos\StreamSniper` |
+| Settings, channels & logs | `%LOCALAPPDATA%\StreamSniper` |
+
+## Contributing
+
+Contributions are welcome! Fork the repository, make your changes, and submit a pull request.
+
+## Disclaimer
+
+StreamSniper does not bypass DRM, paywalls, memberships, or private-stream restrictions. Only record or upload content you own or are authorized to use. Follow YouTube's terms of service and applicable laws.
+
+**StreamSniper is community-built beta software.**
